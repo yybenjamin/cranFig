@@ -60,7 +60,7 @@ function plot(){
 	//   .domain(d3.extent(pathData, function(d,i) {  return d.t; }))
 	//   .range([ 0, width ]);
 	var x_1 = d3.scaleLinear()
-	  .domain([0,3])
+	  .domain([0,10])
 	  .range([ 0, width ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")

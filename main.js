@@ -37,7 +37,7 @@ var svg = d3.select("#my_dataviz")
 fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 d3.csv(fileInput).then(function(data) {
   		data.forEach(function(d) {		   
-			pathData.push({'t':parseFloat(d.t),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
+			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
 		});
   		plot();
 	});
@@ -59,7 +59,7 @@ function plot(){
 	//   .domain(d3.extent(pathData, function(d,i) {  return d.t; }))
 	//   .range([ 0, width ]);
 	var x_1 = d3.scaleLinear()
-	  .domain([0,10])
+	  .domain([0,5])
 	  .range([ 0, width ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
@@ -95,7 +95,7 @@ function plot(){
 
 	// Add Y axis
 	var y_2 = d3.scaleLinear()
-	  .domain([-1, 1])
+	  .domain([-1.2, 1.2])
 	  .range([ height, 0 ]); 
 
 	var axis_2=d3.axisRight(y_2);  
@@ -123,7 +123,7 @@ function plot(){
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([d3.min(pathData, function(d,i) {  return +d.u; }), d3.max(pathData, function(d,i) {  return +d.u; })])
+	  .domain([d3.min(pathData, function(d,i) {  return +d.u; })*1.05, 1.05*d3.max(pathData, function(d,i) {  return +d.u; })])
 	  .range([ height, 0 ]); 
 
 	var axis_3=d3.axisLeft(y_3);  
@@ -147,7 +147,7 @@ function plot(){
 
 // Add Y axis
 	var y_4 = d3.scaleLinear()
-	  .domain([d3.min(pathData, function(d,i) {  return +d.u_max; }), d3.max(pathData, function(d,i) {  return +d.u_max; })])
+	  .domain([d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05, -d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05])
 	  .range([ height, 0 ]); 
 
 	var axis_4=d3.axisRight(y_4);  

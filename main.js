@@ -38,7 +38,7 @@ var svg = d3.select("#my_dataviz")
 fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 d3.csv(fileInput).then(function(data) {
   		data.forEach(function(d) {		   
-			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
+			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':-d.u,'u_max':d.u_max})
 		});
   		plot();
 	});
@@ -60,11 +60,11 @@ function plot(){
 	//   .domain(d3.extent(pathData, function(d,i) {  return d.t; }))
 	//   .range([ 0, width ]);
 	var x_1 = d3.scaleLinear()
-	  .domain([35,40])
+	  .domain([0,5])
 	  .range([ 0, width ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
-	  .call(d3.axisBottom(x_1));
+	  .call(d3.axisBottom(x_1));-
 	axis_x.selectAll('.tick text')
     .attr('font-size', 15)
     .attr('font-family', 'serif')
@@ -91,7 +91,7 @@ function plot(){
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
 	    .y(function(d,i) { return y_1(d.d1); })
-	    )
+	    );
 
 
 	// Add Y axis
@@ -117,14 +117,14 @@ function plot(){
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
 	    .y(function(d,i) { return y_2(d.v1); })
-	    )
+	    );
 
 
 
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([0.3,-0.3])
+	  .domain([0.1,-0.1])
 	  .range([ height, 0 ]); 
 
 	var axis_3=d3.axisLeft(y_3);  
@@ -144,40 +144,40 @@ function plot(){
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
 	    .y(function(d,i) { return y_3(d.u); })
-	    )
+	    );
 
 // Add Y axis
-	var y_4 = d3.scaleLinear()
-	  //.domain([d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05, -d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05])
-	  .domain([-0.3,0.3])
-	  .range([ height, 0 ]); 
+	// var y_4 = d3.scaleLinear()
+	//   //.domain([d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05, -d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05])
+	//   .domain([-0.1,0.1])
+	//   .range([ height, 0 ]); 
 
-	var axis_4=d3.axisRight(y_4);  
-	axis_ryr=svg.append("g")
-	  .attr("transform", "translate("+width+",0)")
-	  .call(axis_4);
-	axis_ryr.selectAll('.tick text')
-    .attr('font-size', 15)
-    .attr('font-family', 'serif')
-    .attr('fill', 'purple');  
-	// Add the line
-	svg.append("path")
-	  .datum(pathData)
-	  .attr("fill", "none")
-	  .attr("stroke", "purple")
-	  .attr("stroke-width", 1.5)
-	  .style("stroke-dasharray", "0 0")
-	  .attr("d", d3.line()
-	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_4(d.u_max); })
-	    )
-
-
-
-
-
-
+	// var axis_4=d3.axisRight(y_4);  
+	// axis_ryr=svg.append("g")
+	//   .attr("transform", "translate("+width+",0)")
+	//   .call(axis_4);
+	// axis_ryr.selectAll('.tick text')
+ //    .attr('font-size', 15)
+ //    .attr('font-family', 'serif')
+ //    .attr('fill', 'purple');  
 	// // Add the line
+	// svg.append("path")
+	//   .datum(pathData)
+	//   .attr("fill", "none")
+	//   .attr("stroke", "purple")
+	//   .attr("stroke-width", 1.5)
+	//   .style("stroke-dasharray", "0 0")
+	//   .attr("d", d3.line()
+	//     .x(function(d,i) { return x_1(d.t); })
+	//     .y(function(d,i) { return y_4(d.u_max); })
+	//     )
+
+
+
+
+
+
+	// Add the line
 	svg.append("path")
 	  .datum(pathData)
 	  .attr("fill", "none")

@@ -34,7 +34,7 @@ var svg = d3.select("#my_dataviz")
 
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/path.csv
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/exp-data.csv
-fileInput='https://raw.githubusercontent.com/yybenjamin/chartplot/master/exp-data.csv';
+fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 d3.csv(fileInput).then(function(data) {
   		data.forEach(function(d) {
 		    //pathData.push({'t':d.t,'frame':d.frame,'x':d.x,'y':d.y,'z':d.z,'theta':d.theta})//{sn:,title:,src:}

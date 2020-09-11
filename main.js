@@ -60,7 +60,7 @@ function plot(){
 	//   .domain(d3.extent(pathData, function(d,i) {  return d.t; }))
 	//   .range([ 0, width ]);
 	var x_1 = d3.scaleLinear()
-	  .domain([0,10])
+	  .domain([35,40])
 	  .range([ 0, width ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
@@ -124,7 +124,7 @@ function plot(){
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([1,-1])
+	  .domain([0.3,-0.3])
 	  .range([ height, 0 ]); 
 
 	var axis_3=d3.axisLeft(y_3);  
@@ -149,7 +149,7 @@ function plot(){
 // Add Y axis
 	var y_4 = d3.scaleLinear()
 	  //.domain([d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05, -d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05])
-	  .domain([-1,1])
+	  .domain([-0.3,0.3])
 	  .range([ height, 0 ]); 
 
 	var axis_4=d3.axisRight(y_4);  

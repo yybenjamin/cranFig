@@ -36,16 +36,9 @@ var svg = d3.select("#my_dataviz")
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/exp-data.csv
 fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 d3.csv(fileInput).then(function(data) {
-  		data.forEach(function(d) {
-		    //pathData.push({'t':d.t,'frame':d.frame,'x':d.x,'y':d.y,'z':d.z,'theta':d.theta})//{sn:,title:,src:}
-		    var est_theta=90*(1-(parseFloat(d.z)-675.5)/(1135-675.5));
-		    if (parseFloat(d.z)>1135 || parseFloat(d.t)<100)
-		    {
-		    	est_theta=0;
-		    }
-			pathData.push({'t':parseFloat(d.t)+parseFloat(d.frame)/30,'x':d.x,'y':d.y,'z':d.z,'theta':d.theta, 'est_theta':est_theta})//{sn:,title:,src:}
+  		data.forEach(function(d) {		   
+			pathData.push({'t':parseFloat(d.t),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
 		});
-
   		plot();
 	});
 
@@ -66,7 +59,7 @@ function plot(){
 	//   .domain(d3.extent(pathData, function(d,i) {  return d.t; }))
 	//   .range([ 0, width ]);
 	var x_1 = d3.scaleLinear()
-	  .domain([0,190])
+	  .domain([0,10])
 	  .range([ 0, width ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
@@ -79,7 +72,7 @@ function plot(){
 
 	// Add Y axis
 	var y_1 = d3.scaleLinear()
-	  .domain([0, d3.max(pathData, function(d,i) {  return +d.x; })])
+	  .domain([-1, 1])
 	  .range([ height, 0 ]); 
 	axis_lyl=svg.append("g")
 	  .call(d3.axisLeft(y_1));
@@ -96,13 +89,13 @@ function plot(){
 	  .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_1(d.x); })
+	    .y(function(d,i) { return y_1(d.d1); })
 	    )
 
 
 	// Add Y axis
 	var y_2 = d3.scaleLinear()
-	  .domain([0, 3*d3.max(pathData, function(d,i) {  return +d.y; })])
+	  .domain([-1, 1])
 	  .range([ height, 0 ]); 
 
 	var axis_2=d3.axisRight(y_2);  
@@ -122,7 +115,7 @@ function plot(){
 	  .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_2(d.y); })
+	    .y(function(d,i) { return y_2(d.v1); })
 	    )
 
 
@@ -130,7 +123,7 @@ function plot(){
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([0, d3.max(pathData, function(d,i) {  return +d.z; })])
+	  .domain([d3.min(pathData, function(d,i) {  return +d.u; }), d3.max(pathData, function(d,i) {  return +d.u; })])
 	  .range([ height, 0 ]); 
 
 	var axis_3=d3.axisLeft(y_3);  
@@ -149,12 +142,12 @@ function plot(){
 	  .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_3(d.z); })
+	    .y(function(d,i) { return y_3(d.u); })
 	    )
 
 // Add Y axis
 	var y_4 = d3.scaleLinear()
-	  .domain([0, d3.max(pathData, function(d,i) {  return +d.theta; })])
+	  .domain([d3.min(pathData, function(d,i) {  return +d.u_max; }), d3.max(pathData, function(d,i) {  return +d.u_max; })])
 	  .range([ height, 0 ]); 
 
 	var axis_4=d3.axisRight(y_4);  
@@ -174,7 +167,7 @@ function plot(){
 	  .style("stroke-dasharray", "0 0")
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_4(d.theta); })
+	    .y(function(d,i) { return y_4(d.u_max); })
 	    )
 
 

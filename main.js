@@ -34,6 +34,7 @@ var svg = d3.select("#my_dataviz")
 
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/path.csv
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/exp-data.csv
+//fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/cont_describe.csv';
 fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 d3.csv(fileInput).then(function(data) {
   		data.forEach(function(d) {		   
@@ -123,7 +124,7 @@ function plot(){
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([d3.min(pathData, function(d,i) {  return +d.u; })*1.05, 1.05*d3.max(pathData, function(d,i) {  return +d.u; })])
+	  .domain([0.1,-0.1])
 	  .range([ height, 0 ]); 
 
 	var axis_3=d3.axisLeft(y_3);  
@@ -147,7 +148,8 @@ function plot(){
 
 // Add Y axis
 	var y_4 = d3.scaleLinear()
-	  .domain([d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05, -d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05])
+	  //.domain([d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05, -d3.min(pathData, function(d,i) {  return +d.u_max; })*1.05])
+	  .domain([-0.1,0.1])
 	  .range([ height, 0 ]); 
 
 	var axis_4=d3.axisRight(y_4);  

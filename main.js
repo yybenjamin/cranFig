@@ -5,8 +5,8 @@ var est_theta=[];
 
 
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 920 - margin.left - margin.right,
+var margin = {top: 30, right: 40, bottom: 30, left: 60},
+    width = 940 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -38,7 +38,7 @@ var svg = d3.select("#my_dataviz")
 fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 d3.csv(fileInput).then(function(data) {
   		data.forEach(function(d) {		   
-			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':-d.u,'u_max':d.u_max})
+			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
 		});
   		plot();
 	});
@@ -78,7 +78,7 @@ function plot(){
 	axis_lyl=svg.append("g")
 	  .call(d3.axisLeft(y_1));
 	axis_lyl.selectAll('.tick text')
-    .attr('font-size', 15)
+    .attr('font-size', 5)
     .attr('font-family', 'serif')
     .attr('fill', 'green');    
 
@@ -104,7 +104,7 @@ function plot(){
 	  .attr("transform", "translate("+0+",0)")
 	  .call(axis_2);
 	axis_lyr.selectAll('.tick text')
-    .attr('font-size', 15)
+    .attr('font-size', 5)
     .attr('font-family', 'serif')
     .attr('fill', 'orange');  
 	
@@ -124,10 +124,11 @@ function plot(){
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([0.1,-0.1])
+	  .domain([-0.1,0.1])
 	  .range([ height, 0 ]); 
 
-	var axis_3=d3.axisLeft(y_3);  
+	var axis_3=d3.axisRight(y_3);
+
 	axis_ryl=svg.append("g")
 	  .attr("transform", "translate("+width+",0)")
 	  .call(axis_3);

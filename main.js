@@ -2,7 +2,8 @@
 var pathData=[];
 var un_real=[];
 var un_sim=[];
-
+var cont_real=[];
+var cont_sim=[];
 
 
 // set the dimensions and margins of the graph
@@ -30,6 +31,16 @@ var svg1 = d3.select("#my_dataviz1")
           "translate(" + margin.left + "," + margin.top + ")");
 
 
+var svg2 = d3.select("#my_dataviz2")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+
 
 
 
@@ -48,7 +59,8 @@ var svg1 = d3.select("#my_dataviz1")
 fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
 fileInput2='https://raw.githubusercontent.com/yybenjamin/cranFig/master/uncontrol_real.csv'
 fileInput3='https://raw.githubusercontent.com/yybenjamin/cranFig/master/uncontrol_sim.csv'
-
+fileInput4='https://raw.githubusercontent.com/yybenjamin/cranFig/master/simulated_cont_res.csv'
+fileInput5='https://raw.githubusercontent.com/yybenjamin/cranFig/master/real_cont_res.csv'
 //read constant force approach simulated data
 d3.csv(fileInput).then(function(data) {
   		data.forEach(function(d) {		   
@@ -69,6 +81,20 @@ d3.csv(fileInput3).then(function(data) {
 		});	
   		plot2();
 	});
+
+//read simulated and real control response data
+d3.csv(fileInput4).then(function(data) {
+  		data.forEach(function(d) {		   
+			cont_sim.push({'t':parseFloat(d.t1sc),'d1':d.d1sc})
+		});	
+	});
+d3.csv(fileInput5).then(function(data) {
+  		data.forEach(function(d) {		   
+			cont_real.push({'t':parseFloat(d.t1rc),'d1':d.d1rc})
+		});	
+  		plot3();
+	});
+
 //https://raw.githubusercontent.com/sdaityari/my_git_project/master/posts.csv
 function plot(){
 
@@ -167,7 +193,7 @@ function plot(){
 function plot2(){
 
 	var x_1 = d3.scaleLinear()
-	  .domain([0,45])
+	  .domain([0,43])
 	  .range([ 0, width ]);
 	axis_x=svg1.append("g")
 	  .attr("transform", "translate(0," + height + ")")
@@ -187,13 +213,13 @@ function plot2(){
 	axis_lyl.selectAll('.tick text')
     .attr('font-size', 15)
     .attr('font-family', 'serif')
-    .attr('fill', 'green');    
+    .attr('fill', 'black');    
 
 	// Add the line
 	svg1.append("path")
 	  .datum(un_real)
 	  .attr("fill", "none")
-	  .attr("stroke", "green")
+	  .attr("stroke", "black")
 	  .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
@@ -211,13 +237,81 @@ function plot2(){
 	  .attr("transform", "translate("+0+",0)")
 	  .call(axis_2);
 	axis_lyr.selectAll('.tick text')
-    .attr('font-size', 5)
+    .attr('font-size', 0)
     .attr('font-family', 'serif')
     .attr('fill', 'orange');  
 	
 	// Add the line
 	svg1.append("path")
 	  .datum(un_sim)
+	  .attr("fill", "none")
+	  .attr("stroke", "orange")
+	  .attr("stroke-width", 1.5)
+	  .attr("d", d3.line()
+	    .x(function(d,i) { return x_1(d.t); })
+	    .y(function(d,i) { return y_2(d.d1); })
+	    );
+
+
+
+
+}
+
+//compare control response between real case and simulated case
+function plot3(){
+
+	var x_1 = d3.scaleLinear()
+	  .domain([0,23])
+	  .range([ 0, width ]);
+	axis_x=svg2.append("g")
+	  .attr("transform", "translate(0," + height + ")")
+	  .call(d3.axisBottom(x_1));-
+	axis_x.selectAll('.tick text')
+    .attr('font-size', 15)
+    .attr('font-family', 'serif')
+    .attr('fill', 'black');  
+	
+
+	// Add Y axis
+	var y_1 = d3.scaleLinear()
+	  .domain([-1.2, 1.2])
+	  .range([ height, 0 ]); 
+	axis_lyl=svg2.append("g")
+	  .call(d3.axisLeft(y_1));
+	axis_lyl.selectAll('.tick text')
+    .attr('font-size', 15)
+    .attr('font-family', 'serif')
+    .attr('fill', 'black');    
+
+	// Add the line
+	svg2.append("path")
+	  .datum(cont_real)
+	  .attr("fill", "none")
+	  .attr("stroke", "black")
+	  .attr("stroke-width", 1.5)
+	  .attr("d", d3.line()
+	    .x(function(d,i) { return x_1(d.t); })
+	    .y(function(d,i) { return y_1(d.d1); })
+	    );
+
+
+	// Add Y axis
+	var y_2 = d3.scaleLinear()
+	  .domain([-1.2, 1.2])
+	  .range([ height, 0 ]); 
+
+	var axis_2=d3.axisRight(y_2);  
+	axis_lyr=svg2.append("g")
+	  .attr("transform", "translate("+0+",0)")
+	  .call(axis_2);
+	axis_lyr.selectAll('.tick text')
+    .attr('font-size', 1)
+    .attr('font-family', 'serif')
+    .attr('fill', 'orange');  
+	
+	// Add the line
+	svg2.append("path")
+	  .datum(cont_sim)
 	  .attr("fill", "none")
 	  .attr("stroke", "orange")
 	  .attr("stroke-width", 1.5)

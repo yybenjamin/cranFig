@@ -77,27 +77,27 @@ fileInput5='https://raw.githubusercontent.com/yybenjamin/cranFig/master/real_con
 fileInput6='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_fulltime_constantF_cont_res.csv'
 //read constant force approach simulated data
 
-d3.csv(fileInput).then(function(data) {
-  		data.forEach(function(d) {		   
-			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
-		});
-  		//plot0();
-  		plotDEMO();
-	});
+// d3.csv(fileInput).then(function(data) {
+//   		data.forEach(function(d) {		   
+// 			pathData.push({'t':parseFloat(d.t1),'d1':d.d1,'v1':d.v1,'u':d.u,'u_max':d.u_max})
+// 		});
+//   		//plot0();
+//   		plotDEMO();
+// 	});
 
 //read uncontrol responses from a real case and a simulation
 
-// d3.csv(fileInput2).then(function(data) {
-//   		data.forEach(function(d) {		   
-// 			un_real.push({'t':parseFloat(d.t1r),'d1':d.d1r})
-// 		});	
-// 	});
-// d3.csv(fileInput3).then(function(data) {
-//   		data.forEach(function(d) {		   
-// 			un_sim.push({'t':parseFloat(d.t1s),'d1':d.d1s})
-// 		});	
-//   		plot2();
-// });
+d3.csv(fileInput2).then(function(data) {
+  		data.forEach(function(d) {		   
+			un_real.push({'t':parseFloat(d.t1r),'d1':d.d1r})
+		});	
+	});
+d3.csv(fileInput3).then(function(data) {
+  		data.forEach(function(d) {		   
+			un_sim.push({'t':parseFloat(d.t1s),'d1':d.d1s})
+		});	
+  		plot2();
+});
 
 // //read simulated and real control response data
 

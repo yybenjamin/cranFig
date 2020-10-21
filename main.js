@@ -15,7 +15,7 @@ var plotfig4=1;
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 40, bottom:20, left: 60},
     width = 940 - margin.left - margin.right,
-    height = 150 - margin.top - margin.bottom;
+    height = 450 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -68,8 +68,8 @@ var svg3 = d3.select("#my_dataviz3")
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/path.csv
 //https://raw.githubusercontent.com/yybenjamin/chartplot/master/exp-data.csv
 //fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/cont_describe.csv';
-//simulation:1, 3,4,6
-fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont.csv';
+//simulation:1, 3,4,6(
+fileInput='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_cont(kopt).csv';
 fileInput2='https://raw.githubusercontent.com/yybenjamin/cranFig/master/uncontrol_real.csv'
 fileInput3='https://raw.githubusercontent.com/yybenjamin/cranFig/master/uncontrol_sim.csv'
 fileInput4='https://raw.githubusercontent.com/yybenjamin/cranFig/master/simulated_cont_res.csv'

@@ -1,10 +1,6 @@
 
-var pathData=[];
-var un_real=[];
-var un_sim=[];
-var cont_real=[];
-var cont_sim=[];
-var cont_sim_ft=[];
+var cont_sim5=[];
+
 
 
 var plotfig1=0;
@@ -37,13 +33,16 @@ var svg1 = d3.select("#my_dataviz1")
           "translate(" + margin.left + "," + margin.top + ")");
 
 
-fileInput6='https://raw.githubusercontent.com/yybenjamin/cranFig/master/sim_fulltime_constantF_cont_res.csv'
+fin5='https://raw.githubusercontent.com/yybenjamin/cranFig/master/init_disturb/R_init_distur_5deg.csv';
+fin10='https://raw.githubusercontent.com/yybenjamin/cranFig/master/init_disturb/R_init_distur_10deg.csv';
+fin15='https://raw.githubusercontent.com/yybenjamin/cranFig/master/init_disturb/R_init_distur_15deg.csv';
+fin20='https://raw.githubusercontent.com/yybenjamin/cranFig/master/init_disturb/R_init_distur_20deg.csv';
 
 //read uncontrol responses from a real case and a simulation
 
-d3.csv(fileInput3).then(function(data) {
+d3.csv(fin5).then(function(data) {
   		data.forEach(function(d) {		   
-			un_sim.push({'t':parseFloat(d.t1s),'d1':d.d1s})
+			cont_sim5.push({'t':parseFloat(d.t1),'d1':d.d1,'u':d.u,'u_max':d.u_max})
 		});	
   		plot();
 });
@@ -56,7 +55,7 @@ d3.csv(fileInput3).then(function(data) {
 function plot(){
 
 	var x_1 = d3.scaleLinear()
-	  .domain([0,25])
+	  .domain([0,30])
 	  .range([ 0, width ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
@@ -80,7 +79,7 @@ function plot(){
 
 	// Add the line
 	svg.append("path")
-	  .datum(pathData)
+	  .datum(cont_sim5)
 	  .attr("fill", "none")
 	  .attr("stroke", "green")
 	  .attr("stroke-width", 1.5)
@@ -106,13 +105,13 @@ function plot(){
 	
 	// Add the line
 	svg.append("path")
-	  .datum(pathData)
+	  .datum(cont_sim5)
 	  .attr("fill", "none")
 	  .attr("stroke", "orange")
 	  .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_2(d.v1); })
+	    .y(function(d,i) { return y_2(d.u); })
 	    );
 
 
@@ -120,7 +119,7 @@ function plot(){
 
 	// Add Y axis
 	var y_3 = d3.scaleLinear()
-	  .domain([-0.1,0.1])
+	  .domain([-5,5])
 	  .range([ height, 0 ]); 
 
 	// var axis_3=d3.axisRight(y_3);
@@ -134,40 +133,16 @@ function plot(){
  //    .attr('fill', 'blue');  
 	// Add the line
 	svg.append("path")
-	  .datum(pathData)
+	  .datum(cont_sim5)
 	  .attr("fill", "none")
 	  .attr("stroke", "blue")
 	  .attr("stroke-width", 1.5)
 	  .attr("d", d3.line()
 	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_3(d.u); })
+	    .y(function(d,i) { return y_3(d.u_max); })
 	    );
 
 
 
-
-	 var y_4 = d3.scaleLinear()
-	  .domain([-0.1,0.1])
-	  .range([ height, 0 ]); 
-
-	// var axis_3=d3.axisRight(y_3);
-
-	// axis_ryl=svg.append("g")
-	//   .attr("transform", "translate("+width+",0)")
-	//   .call(axis_3);
-	// axis_ryl.selectAll('.tick text')
- //    .attr('font-size', 15)
- //    .attr('font-family', 'serif')
- //    .attr('fill', 'blue');  
-	// Add the line
-	svg.append("path")
-	  .datum(pathData)
-	  .attr("fill", "none")
-	  .attr("stroke", "black")
-	  .attr("stroke-width", 1.5)
-	  .attr("d", d3.line()
-	    .x(function(d,i) { return x_1(d.t); })
-	    .y(function(d,i) { return y_4(d.u_max); })//y_3 to compare with u_d
-	    ); 
 }
 

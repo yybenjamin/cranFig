@@ -14,7 +14,7 @@ var svg = d3.select("#my_dataviz")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-fin='https://raw.githubusercontent.com/yybenjamin/cranFig/master/init_disturb/R_init_distur_5.csv';
+fin='https://raw.githubusercontent.com/yybenjamin/cranFig/master/ml_contour/R_lm_ratio.csv';
 
 Promise.all([
     d3.csv(fin),
@@ -51,18 +51,19 @@ function plot(){
     .attr('font-family', 'serif')
     .attr('fill', 'black');    
     // Add the line
-
+console.log('there')
 	// compute the density data
-  var densityData = d3.contourDensity()
-    .x(function(d) { return x(d.x); })   // x and y = column name in .csv input data
-    .y(function(d) { return y(d.y); })
+  var contourData = d3.contours()
+    .x(function(d) { return x(d.lr); })   // x and y = column name in .csv input data
+    .y(function(d) { return y(d.mr); })
     .size([width, height])
     .bandwidth(20)    // smaller = more precision in lines = more lines
+    .thresholds(0.01)
     (cont_sim)
-
+console.log('here')
   // Add the contour: several "path"
   svg.selectAll("path")
-    .data(densityData)
+    .data(contourData)
     .enter()
     .append("path")
       .attr("d", d3.geoPath())
@@ -72,25 +73,3 @@ function plot(){
 
 }
 
-
-  
-  // svg.append("g")
-  //     .attr("fill", "none")
-  //     .attr("stroke", "steelblue")
-  //     .attr("stroke-linejoin", "round")
-  //   .selectAll("path")
-  //   .data(contours)
-  //   .enter().append("path")
-  //     .attr("stroke-width", (d, i) => i % 5 ? 0.25 : 1)
-  //     .attr("d", d3.geoPath());
-
-
-
-
-// contours = d3.contourDensity()
-//     .x(d => x(d.x))
-//     .y(d => y(d.y))
-//     .size([width, height])
-//     .bandwidth(30)
-//     .thresholds(30)
-//   (data)   

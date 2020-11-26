@@ -53,12 +53,20 @@ file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/energy/1R_
 file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/energy/1R_V1d1rms0.154_p0.3723.csv";
 file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/energy/1R_V2d1rms0.1567_p0.3501.csv";
 
+var exp_un_dict=[];
+var exp_cont_dict=[];
+
+file_exp_un='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_uncontrolled.csv';
+file_exp_cont='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_controlled.csv';
+
 // //read simulated and real control response data
 
 Promise.all([
     d3.csv(file_lqr),
     d3.csv(file_v1),
     d3.csv(file_v2),
+    d3.csv(file_exp_un),
+    d3.csv(file_exp_cont),
 
 ]).then(function(files) {
 	
@@ -75,7 +83,14 @@ Promise.all([
 			if(d.t<18.0)	 
 				v2_dict.push({'t':parseFloat(d.t),'d1':d.d1,'u':(parseFloat(d.u)).toString(),'u_max':parseFloat(d.u_max),'ke':parseFloat(d.K),'ue':parseFloat(d.U),'P':parseFloat(d.P)})
 		});
-    plot_V1_V2_umax();
+    files[3].forEach(function(d) {		   	 
+			exp_un_dict.push({'t':parseFloat(d.t),'d1':d.d1})
+	});
+    files[4].forEach(function(d) {		   	 
+			exp_cont_dict.push({'t':parseFloat(d.t),'d1':d.d1})
+	});
+
+    //plot_V1_V2_umax();
     //plot_V1_V2();
     //plot_LQR_CF_u();
 	//plot_LQRenergy();

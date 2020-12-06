@@ -49,15 +49,20 @@ var v1_p=[];
 
 
 
-file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/energy/1R_LQR_d1rms0.0512.csv";
-file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/energy/1R_V1d1rms0.154_p0.3723.csv";
-file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/energy/1R_V2d1rms0.1567_p0.3501.csv";
+file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_LQR_d1rms0.0512.csv";
+file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V1d1rms0.154_p0.3723.csv";
+file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V2d1rms0.1567_p0.3501.csv";
 
-var exp_un_dict=[];
-var exp_cont_dict=[];
-
-file_exp_un='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_uncontrolled.csv';
-file_exp_cont='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_controlled.csv';
+var exp_un_real_dict=[];
+var exp_cont_real_dict=[];
+var exp_un_sim_dict=[];
+var exp_cont_sim_dict=[];
+//file_exp_un='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_uncontrolled.csv';
+//file_exp_cont='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_controlled.csv';
+file_exp_un_sim='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_un_sim.csv';
+file_exp_cont_sim='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_cont_sim.csv';
+file_exp_un_real='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_un_real.csv';
+file_exp_cont_real='https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/exp_cont_real.csv';
 
 // //read simulated and real control response data
 
@@ -65,8 +70,10 @@ Promise.all([
     d3.csv(file_lqr),
     d3.csv(file_v1),
     d3.csv(file_v2),
-    d3.csv(file_exp_un),
-    d3.csv(file_exp_cont),
+    d3.csv(file_exp_un_real),
+    d3.csv(file_exp_cont_real),
+    d3.csv(file_exp_un_sim),
+    d3.csv(file_exp_cont_sim),
 
 ]).then(function(files) {
 	
@@ -83,19 +90,30 @@ Promise.all([
 			if(d.t<18.0)	 
 				v2_dict.push({'t':parseFloat(d.t),'d1':d.d1,'u':(parseFloat(d.u)).toString(),'u_max':parseFloat(d.u_max),'ke':parseFloat(d.K),'ue':parseFloat(d.U),'P':parseFloat(d.P)})
 		});
-    files[3].forEach(function(d) {		   	 
-			exp_un_dict.push({'t':parseFloat(d.t),'d1':d.d1})
+    files[3].forEach(function(d) {		
+    	if(d.t<43.0)   	 
+			exp_un_real_dict.push({'t':parseFloat(d.t),'d1':d.d1})
 	});
-    files[4].forEach(function(d) {		   	 
-			exp_cont_dict.push({'t':parseFloat(d.t),'d1':d.d1})
+    files[4].forEach(function(d) {		
+    	if(d.t<23.0)    	 
+			exp_cont_real_dict.push({'t':parseFloat(d.t),'d1':d.d1})
 	});
-
+    files[5].forEach(function(d) {		
+    	if(d.t<43.0)   	   	 
+			exp_un_sim_dict.push({'t':parseFloat(d.t),'d1':d.d1})
+	});
+    files[6].forEach(function(d) {	
+    	if(d.t<23.0) 	   	 
+			exp_cont_sim_dict.push({'t':parseFloat(d.t),'d1':d.d1})
+	});
+    
+    plot_real_sim();
     //plot_V1_V2_umax();
     //plot_V1_V2();
     //plot_LQR_CF_u();
 	//plot_LQRenergy();
 	//plot_CFenergy();
-	//plot1();
+	
 	
 }).catch(function(err) {
     // handle error here
@@ -490,53 +508,118 @@ function plot_V1_V2_umax(){
 
 
 
+function plot_real_sim(){
 
-
-
-function plot1(){
-
-	var x_2 = d3.scaleLinear()
-	  .domain([0,30])
-	  .range([ 0, width ]);
-
-	axis_x2=svg2.append("g")
+	var x_1 = d3.scaleLinear()
+	  .domain([0,43])
+	  .range([ 0, width-25 ]);
+	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
-	  .call(d3.axisBottom(x_2));
-
-	axis_x2.selectAll('.tick text')
+	  .call(d3.axisBottom(x_1));-
+	axis_x.selectAll('.tick text')
     .attr('font-size', 15)
     .attr('font-family', 'serif')
     .attr('fill', 'black');  
-
+	
+	
+	axis_x=svg.append("g")
+	  .attr("transform", "translate(0," + height + ")")
+	  .call(d3.axisBottom(x_1));-
+	axis_x.selectAll('.tick text')
+    .attr('font-size', 15)
+    .attr('font-family', 'serif')
+    .attr('fill', 'black'); 
 	// Add Y axis
-	var y_2 = d3.scaleLinear()
-	  .domain([-1, 400])
+	var y_1 = d3.scaleLinear()
+	  .domain([-1, 1])
 	  .range([ height, 0 ]); 
-	axis_lyl2=svg2.append("g")
-	  .call(d3.axisLeft(y_2));
-	axis_lyl2.selectAll('.tick text')
+	axis_lyl=svg.append("g")
+	  .call(d3.axisLeft(y_1));
+	axis_lyl.selectAll('.tick text')
     .attr('font-size', 15)
     .attr('font-family', 'serif')
     .attr('fill', 'black');    
-    // Add the line
-console.log(Math.log(11))
-	svg2.append("path")
-	  .datum(v2_dict)
+
+    var y_2 = d3.scaleLinear()
+	  .domain([-0.06, 1])
+	  .range([ height, 0 ]); 
+	// axis_ryr=svg.append("g")
+	//   .attr("transform", "translate(820," + 0 + ")")	
+	//   .call(d3.axisRight(y_2));
+	// axis_ryr.selectAll('.tick text')
+ //    .attr('font-size', 15)
+ //    .attr('font-family', 'serif')
+ //    .attr('fill', 'black');    
+
+	var y_3 = d3.scaleLinear()
+	  .domain([-0.18, 1])
+	  .range([ height, 0 ]); 
+
+
+
+	// var x_2 = d3.scaleLinear()
+	//   .domain([9.7,11])
+	//   .range([ 0, width-25 ]);
+	// axis_x2=svg.append("g")
+	//   .attr("transform", "translate(0," + height + ")")
+	//   .call(d3.axisBottom(x_2));-
+	// axis_x2.selectAll('.tick text')
+ //    .attr('font-size', 15)
+ //    .attr('font-family', 'serif')
+ //    .attr('fill', 'black'); 
+        
+	// var y_4 = d3.scaleLinear()
+	//   .domain([-0.1, 0.1])
+	//   .range([ height, 0 ]); 
+	svg.append("path")
+	  .datum(exp_un_real_dict)
 	  .attr("fill", "none")
 	  .attr("stroke", "green")
 	  .attr("stroke-width", 1.0)
 	  .attr("d", d3.line()
-	    .x(function(d,i) { return x_2(d.t); })
-	    .y(function(d,i) { return y_2(d.ke); })
+	    .x(function(d,i) { return x_1(d.t); })
+	    .y(function(d,i) { return y_1(d.d1); })
 	    );
-	svg2.append("path")
-	  .datum(v2_dict)
+	svg.append("path")
+	  .datum(exp_un_sim_dict)
 	  .attr("fill", "none")
-	  .attr("stroke", "orange")
+	  .attr("stroke", "blue")
 	  .attr("stroke-width", 1.0)
 	  .attr("d", d3.line()
-	    .x(function(d,i) { return x_2(d.t); })
-	    .y(function(d,i) { return y_2(d.ue); })
+	    .x(function(d,i) { return x_1(d.t); })
+	    .y(function(d,i) { return y_1(d.d1); })
 	    );
+
+	// svg.append("path")
+	//   .datum(v1_dict)
+	//   .attr("fill", "none")
+	//   .attr("stroke", "green")
+	//   .attr("stroke-width", 1.0)
+	//   .attr("d", d3.line()
+	//     .x(function(d,i) { return x_1(d.t); })
+	//     .y(function(d,i) { return y_2(d.u); })
+	//     );
+
+	// svg.append("path")
+	//   .datum(v2_dict)
+	//   .attr("fill", "none")
+	//   .attr("stroke", "blue")
+	//   .attr("stroke-width", 1.0)
+	//   .attr("d", d3.line()
+	//     .x(function(d,i) { return x_1(d.t); })
+	//     .y(function(d,i) { return y_3(d.u); })
+	//     );
+
+	// svg.append("path")
+	//   .datum(v1_dict)
+	//   .attr("fill", "none")
+	//   .attr("stroke", "green")
+	//   .attr("stroke-width", 1.0)
+	//   .attr("d", d3.line()
+	//     .x(function(d,i) { return x_2(d.t); })
+	//     .y(function(d,i) { return y_4(d.u); })
+	//     );
+	
 }
+
 

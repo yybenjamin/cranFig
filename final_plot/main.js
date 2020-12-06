@@ -107,12 +107,12 @@ Promise.all([
 			exp_cont_sim_dict.push({'t':parseFloat(d.t),'d1':d.d1})
 	});
     
-    plot_real_sim();
+    //plot_real_sim();
     //plot_V1_V2_umax();
     //plot_V1_V2();
     //plot_LQR_CF_u();
 	//plot_LQRenergy();
-	//plot_CFenergy();
+	plot_CFenergy();
 	
 	
 }).catch(function(err) {

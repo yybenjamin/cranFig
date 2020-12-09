@@ -50,8 +50,8 @@ var v1_p=[];
 
 
 file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_LQRd1rms0.0512.csv";
-file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V1d1rms0.154_pr0.3723.csv";
-file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V2d1rms0.2107_pr0.271.csv";
+file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V1d1rms0.1877_pr0.3723.csv";
+file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_eps0.15V2d1rms0.2556_pr0.271.csv";
 
 var exp_un_real_dict=[];
 var exp_cont_real_dict=[];

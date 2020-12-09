@@ -49,7 +49,7 @@ var v1_p=[];
 
 
 
-file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_LQR_d1rms0.0512.csv";
+file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_LQRd1rms0.0512.csv";
 file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V1d1rms0.154_pr0.3723.csv";
 file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V2d1rms0.1567_pr0.3501.csv";
 
@@ -110,9 +110,9 @@ Promise.all([
     //plot_real_sim();
     //plot_V1_V2_umax();
     //plot_V1_V2();
-    //plot_LQR_CF_u();
+    plot_LQR_CF_u();
 	//plot_LQRenergy();
-	plot_CFenergy();
+	//plot_CFenergy();
 	
 	
 }).catch(function(err) {
@@ -123,7 +123,7 @@ Promise.all([
 function plot_LQRenergy(){
 
 	var x_1 = d3.scaleLinear()
-	  .domain([0,33])
+	  .domain([0,3])
 	  .range([ 0, width-25 ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")

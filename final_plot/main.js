@@ -49,7 +49,7 @@ var v1_p=[];
 
 
 
-file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_LQRd1rms0.0512.csv";
+file_lqr="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_LQRd1rms0.0629.csv";
 file_v1="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_V1d1rms0.1877_pr0.3723.csv";
 file_v2="https://raw.githubusercontent.com/yybenjamin/cranFig/master/final_plot/1R_eps0.15V2d1rms0.2556_pr0.271.csv";
 
@@ -107,8 +107,8 @@ Promise.all([
 			exp_cont_sim_dict.push({'t':parseFloat(d.t),'d1':d.d1})
 	});
     
-    //plot_real_sim();
-    plot_V1_V2_umax();
+    plot_real_sim();
+    //plot_V1_V2_umax();
     //plot_V1_V2();
     //plot_LQR_CF_u();
 	//plot_LQRenergy();
@@ -269,7 +269,7 @@ function plot_LQR_CF_u(){
 
 	// Add Y axis
 	var y_1 = d3.scaleLinear()
-	  .domain([-10, 10])
+	  .domain([-5, 5])
 	  .range([ height, 0 ]); 
 	axis_lyl=svg.append("g")
 	  .call(d3.axisLeft(y_1));
@@ -279,7 +279,7 @@ function plot_LQR_CF_u(){
     .attr('fill', 'black');    
 
     var y_2 = d3.scaleLinear()
-	  .domain([-0.1, 0.1])
+	  .domain([-0.25, 0.25])
 	  .range([ height, 0 ]); 
 	axis_ryr=svg.append("g")
 	  .attr("transform", "translate(820," + 0 + ")")	
@@ -355,7 +355,7 @@ function plot_V1_V2(){
     .attr('fill', 'black'); 
 	// Add Y axis
 	var y_1 = d3.scaleLinear()
-	  .domain([-1, 1])
+	  .domain([-1.3, 1])
 	  .range([ height, 0 ]); 
 	axis_lyl=svg.append("g")
 	  .call(d3.axisLeft(y_1));

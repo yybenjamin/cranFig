@@ -511,7 +511,7 @@ function plot_V1_V2_umax(){
 function plot_real_sim(){
 
 	var x_1 = d3.scaleLinear()
-	  .domain([0,43])
+	  .domain([0,23])
 	  .range([ 0, width-25 ]);
 	axis_x=svg.append("g")
 	  .attr("transform", "translate(0," + height + ")")
@@ -572,7 +572,7 @@ function plot_real_sim(){
 	//   .domain([-0.1, 0.1])
 	//   .range([ height, 0 ]); 
 	svg.append("path")
-	  .datum(exp_un_real_dict)
+	  .datum(exp_cont_real_dict)
 	  .attr("fill", "none")
 	  .attr("stroke", "green")
 	  .attr("stroke-width", 1.0)
@@ -581,7 +581,7 @@ function plot_real_sim(){
 	    .y(function(d,i) { return y_1(d.d1); })
 	    );
 	svg.append("path")
-	  .datum(exp_un_sim_dict)
+	  .datum(exp_cont_sim_dict)
 	  .attr("fill", "none")
 	  .attr("stroke", "blue")
 	  .attr("stroke-width", 1.0)
